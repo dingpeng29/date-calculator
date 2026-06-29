@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="免费在线日期计算器，计算日期间隔天数、日期加减天数、工作日计算。项目管理、工时统计、合同日期计算必备工具。">
+<meta name="keywords" content="日期计算器,日期间隔,日期加减,工作日计算,天数计算,Date Calculator">
+<meta property="og:title" content="日期计算器在线 - 日期间隔 日期加减 | ToolBox Pro">
+<meta property="og:description" content="计算两个日期间的天数，日期加减天数，工作日计算。">
+<meta property="og:url" content="https://dingpeng29.github.io/date-calculator/">
+<title>日期计算器 - 日期间隔 加减天数 工作日计算 | ToolBox Pro</title>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"日期计算器","url":"https://dingpeng29.github.io/date-calculator/","description":"在线日期计算，日期间隔、日期加减、工作日计算","applicationCategory":"Utility","operatingSystem":"All","inLanguage":"zh-CN"}
+</script>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--text:#1e293b;--text2:#64748b;--border:#e2e8f0;--primary:#3b82f6;--primary-h:#2563eb;--green:#10b981;--purple:#8b5cf6;--shadow:0 1px 3px rgba(0,0,0,0.06);--radius:12px;--radius-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;}
+.header{background:var(--card);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.header .logo{font-size:20px;font-weight:700;text-decoration:none;color:var(--text);}
+.header .back{color:var(--text2);text-decoration:none;font-size:14px;}.header .back:hover{color:var(--primary);}
+.container{max-width:800px;margin:0 auto;padding:24px 20px;}
+.hero{text-align:center;padding:32px 20px 24px;}
+.hero h1{font-size:28px;font-weight:800;color:var(--text);}
+.hero p{color:var(--text2);font-size:14px;margin-top:8px;}
+.card{background:var(--card);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:20px;}
+.tab-row{display:flex;gap:4px;margin-bottom:20px;background:var(--bg);border-radius:var(--radius-sm);padding:4px;}
+.tab-btn{padding:10px 20px;border-radius:6px;border:none;background:none;cursor:pointer;font-size:14px;color:var(--text2);transition:all .15s;flex:1;}
+.tab-btn.active{background:var(--card);color:var(--text);box-shadow:var(--shadow);font-weight:600;}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+.row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:12px;}
+.row label{font-size:13px;color:var(--text2);font-weight:600;}
+.row input[type="date"],.row input[type="number"]{padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:var(--card);}
+.row input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(59,130,246,0.1);}
+.result-big{text-align:center;padding:20px;background:linear-gradient(135deg,#dbeafe,#ede9fe);border-radius:var(--radius-sm);margin-top:16px;}
+.result-big .num{font-size:48px;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.result-big .unit{font-size:16px;color:var(--text2);}
+.result-big .detail{font-size:13px;color:var(--text2);margin-top:4px;}
+.btn{padding:10px 20px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
+.btn-primary{background:var(--primary);color:#fff;}.btn-primary:hover{background:var(--primary-h);}
+.footer{text-align:center;padding:32px 20px;color:var(--text2);font-size:12px;border-top:1px solid var(--border);margin-top:32px;}.footer a{color:var(--primary);text-decoration:none;}
+.powered{text-align:center;font-size:13px;color:var(--text2);margin-top:24px;}.powered a{color:var(--primary);text-decoration:none;font-weight:600;}
+@media(max-width:640px){.hero h1{font-size:22px;}}
+</style>
+</head>
+<body>
+<header class="header"><a href="/date-calculator/" class="logo">📅 DateCalc</a><a href="/toolbox-pro/" class="back">← ToolBox Pro</a></header>
+<div class="container">
+<div class="hero"><h1>日期计算器</h1><p>日期间隔天数、日期加减、工作日计算。项目管理、合同日期、工时统计的实用工具。</p></div>
+
+<div class="card">
+<div class="tab-row">
+<button class="tab-btn active" data-tab="diff">📏 日期间隔</button>
+<button class="tab-btn" data-tab="add">➕ 日期加减</button>
+<button class="tab-btn" data-tab="workday">💼 工作日</button>
+</div>
+
+<div class="tab-panel active" id="panel-diff">
+<div class="row">
+<label>起始日期 <input type="date" id="d1" onchange="calcDiff()"></label>
+<label>结束日期 <input type="date" id="d2" onchange="calcDiff()"></label>
+</div>
+<div class="result-big" id="diffResult"><div class="num">--</div><div class="unit">天</div></div>
+</div>
+
+<div class="tab-panel" id="panel-add">
+<div class="row">
+<label>基准日期 <input type="date" id="baseDate" onchange="calcAdd()"></label>
+<label>天数 <input type="number" id="addDays" value="30" style="width:100px;" oninput="calcAdd()"></label>
+<button class="btn btn-primary" onclick="addDaysVal(Math.abs(parseInt(document.getElementById('addDays').value)||0))">+</button>
+<button class="btn btn-primary" style="background:var(--purple);" onclick="addDaysVal(-Math.abs(parseInt(document.getElementById('addDays').value)||0))">-</button>
+</div>
+<div class="result-big" id="addResult"><div class="num">--</div><div class="unit">结果日期</div></div>
+</div>
+
+<div class="tab-panel" id="panel-workday">
+<div class="row">
+<label>起始日期 <input type="date" id="wd1" onchange="calcWorkday()"></label>
+<label>结束日期 <input type="date" id="wd2" onchange="calcWorkday()"></label>
+</div>
+<div class="result-big" id="workdayResult"><div class="num">--</div><div class="unit">个工作日</div></div>
+</div>
+</div>
+<div class="powered">由 <a href="/toolbox-pro/">ToolBox Pro</a> 提供支持</div>
+</div>
+<footer class="footer"><p>Date Calculator — 所有处理在浏览器本地完成 · <a href="https://github.com/dingpeng29/date-calculator" target="_blank">GitHub</a></p></footer>
+<script>
+document.querySelectorAll('.tab-btn').forEach(function(b){
+b.addEventListener('click',function(){
+document.querySelectorAll('.tab-btn,.tab-panel').forEach(function(x){x.classList.remove('active');});
+b.classList.add('active');
+document.getElementById('panel-'+b.dataset.tab).classList.add('active');
+});
+});
+
+function calcDiff(){
+var d1=new Date(document.getElementById('d1').value),d2=new Date(document.getElementById('d2').value);
+if(isNaN(d1)||isNaN(d2))return;
+var diff=Math.round((d2-d1)/(1000*60*60*24));
+var weeks=Math.floor(Math.abs(diff)/7),d=Math.abs(diff)%7;
+var detail=Math.abs(diff)+' 天 · '+weeks+' 周'+(d?' + '+d+' 天':'');
+document.getElementById('diffResult').innerHTML='<div class="num">'+Math.abs(diff)+'</div><div class="unit">天</div><div class="detail">'+detail+'</div>';
+}
+
+function calcAdd(){
+var d=new Date(document.getElementById('baseDate').value);
+if(isNaN(d))return;
+var n=parseInt(document.getElementById('addDays').value)||0;
+d.setDate(d.getDate()+n);
+var dayNames=['日','一','二','三','四','五','六'];
+document.getElementById('addResult').innerHTML='<div class="num">'+d.toISOString().split('T')[0]+'</div><div class="unit">周'+dayNames[d.getDay()]+'</div><div class="detail">'+document.getElementById('baseDate').value+' '+(n>=0?'+':'')+n+' 天</div>';
+}
+
+function calcWorkday(){
+var d1=new Date(document.getElementById('wd1').value),d2=new Date(document.getElementById('wd2').value);
+if(isNaN(d1)||isNaN(d2))return;
+var count=0,cur=new Date(d1);
+while(cur<=d2){var dow=cur.getDay();if(dow>0&&dow<6)count++;cur.setDate(cur.getDate()+1);}
+var total=Math.round((d2-d1)/(1000*60*60*24))+1;
+document.getElementById('workdayResult').innerHTML='<div class="num">'+count+'</div><div class="unit">个工作日</div><div class="detail">共 '+total+' 天（含周末）</div>';
+}
+
+function addDaysVal(n){document.getElementById('addDays').value=n;calcAdd();}
+
+var today=new Date().toISOString().split('T')[0];
+document.getElementById('d1').value=today;document.getElementById('d2').value=today;
+document.getElementById('baseDate').value=today;
+document.getElementById('wd1').value=today;document.getElementById('wd2').value=today;
+calcDiff();calcAdd();calcWorkday();
+</script>
+</body>
+</html>
